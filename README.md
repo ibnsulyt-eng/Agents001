@@ -19,6 +19,14 @@ live rooms in real time (comments, gifts, joins, likes), logs everything, and fl
 spam/harassment/scams via free rule-based filters plus an LLM Monitor agent for the
 ambiguous cases — see [docs/MONITORING.md](docs/MONITORING.md).
 
+## Two ways to interact
+
+- `python main.py "<goal>"` — one-shot structured task: Planner breaks it down, Worker
+  executes each subtask, Reviewer checks the result. No memory between runs.
+- `python chat_main.py` — interactive chat with real conversation memory across the
+  session (keeps the last 20 messages as context). No tools/planning in this mode — it's
+  for actual back-and-forth conversation, not task execution.
+
 ## Setup
 
 1. Get a free API key:
