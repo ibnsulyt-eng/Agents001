@@ -30,7 +30,7 @@ _PROVIDER_DEFAULTS = {
         "api_base": "https://openrouter.ai/api/v1/chat/completions",
         "key_env": "OPENROUTER_API_KEY",
         "model_env": "OPENROUTER_MODEL",
-        "default_model": "meta-llama/llama-3.3-70b-instruct:free",
+        "default_model": "nvidia/nemotron-nano-9b-v2:free",
     },
 }
 
