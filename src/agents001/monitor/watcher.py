@@ -49,9 +49,9 @@ class RoomWatcher:
                 Event(
                     room=room,
                     event_type="comment",
-                    user_id=str(getattr(event.user, "user_id", "")),
+                    user_id=str(getattr(event.user, "id", "")),
                     nickname=getattr(event.user, "nickname", ""),
-                    text=event.comment,
+                    text=event.content,
                     timestamp=time.time(),
                 )
             )
@@ -62,7 +62,7 @@ class RoomWatcher:
                 Event(
                     room=room,
                     event_type="gift",
-                    user_id=str(getattr(event.user, "user_id", "")),
+                    user_id=str(getattr(event.user, "id", "")),
                     nickname=getattr(event.user, "nickname", ""),
                     text=getattr(getattr(event, "gift", None), "name", ""),
                     timestamp=time.time(),
@@ -75,7 +75,7 @@ class RoomWatcher:
                 Event(
                     room=room,
                     event_type="join",
-                    user_id=str(getattr(event.user, "user_id", "")),
+                    user_id=str(getattr(event.user, "id", "")),
                     nickname=getattr(event.user, "nickname", ""),
                     text="",
                     timestamp=time.time(),
@@ -88,7 +88,7 @@ class RoomWatcher:
                 Event(
                     room=room,
                     event_type="like",
-                    user_id=str(getattr(event.user, "user_id", "")),
+                    user_id=str(getattr(event.user, "id", "")),
                     nickname=getattr(event.user, "nickname", ""),
                     text=str(getattr(event, "count", "")),
                     timestamp=time.time(),
