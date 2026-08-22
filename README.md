@@ -13,6 +13,11 @@ Runs entirely on **free** infrastructure:
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the agents fit together.
 
+Also includes **TikTok Live monitoring** (`monitor_main.py`): watches a list of accounts'
+live rooms in real time (comments, gifts, joins, likes), logs everything, and flags
+spam/harassment/scams via free rule-based filters plus an LLM Monitor agent for the
+ambiguous cases — see [docs/MONITORING.md](docs/MONITORING.md).
+
 ## Setup
 
 1. Get a free API key:
@@ -34,7 +39,8 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the agents fit together
 ## Project layout
 
 ```
-main.py                    entrypoint
+main.py                    Planner/Worker/Reviewer entrypoint
+monitor_main.py            TikTok Live monitoring entrypoint
 src/agents001/
   config.py                loads provider/model/keys from .env
   llm_client.py             HTTP client for Groq/OpenRouter (OpenAI-compatible)
@@ -45,8 +51,17 @@ src/agents001/
     planner.py
     worker.py
     reviewer.py
+  monitor/
+    config.py               watchlist/alerting config
+    watcher.py               per-room TikTokLive connection
+    runner.py                 batches events, runs rules + LLM triage
+    rules.py                 free keyword/spam filters
+    agent.py                 LLM Monitor agent (batched comment review)
+    alerts.py                 Discord/Telegram webhook senders
+    store.py                  SQLite event log
 docs/
   ARCHITECTURE.md
+  MONITORING.md
   DEPLOY_VPS.md
 ```
 
