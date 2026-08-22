@@ -9,7 +9,8 @@ Runs entirely on **free** infrastructure:
   limits, OpenAI-compatible). [OpenRouter](https://openrouter.ai/keys) free models work as a
   drop-in alternative — see `.env.example`.
 - **Hosting**: designed to run on a free VPS (e.g. Oracle Cloud Always Free) rather than
-  locally — see [docs/DEPLOY_VPS.md](docs/DEPLOY_VPS.md).
+  locally — see [docs/DEPLOY_VPS.md](docs/DEPLOY_VPS.md). Also runs directly on an
+  Android phone via Termux — see [docs/DEPLOY_TERMUX.md](docs/DEPLOY_TERMUX.md).
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the agents fit together.
 
