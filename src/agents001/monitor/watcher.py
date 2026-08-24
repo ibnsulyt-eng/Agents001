@@ -96,10 +96,18 @@ class RoomWatcher:
             )
 
     async def run(self) -> None:
-        """Connect and stay connected; reconnect with backoff if the room drops or errors."""
+        """Connect and stay connected; reconnect with backoff if the room drops or errors.
+
+        client.start() is explicitly non-blocking — it returns an asyncio.Task for the
+        connection's heartbeat and returns immediately itself. Awaiting only start()
+        (not the task it returns) meant the connection was created and then immediately
+        torn down with no error, silently. The task itself must be awaited to actually
+        stay connected — confirmed against a real live room.
+        """
         while True:
             try:
-                await self._client.start()
+                task = await self._client.start()
+                await task
             except Exception as exc:  # noqa: BLE001 — one bad room must not kill the others
                 print(f"[{self.username}] error: {exc}")
             print(f"[{self.username}] retrying in 30s...")
