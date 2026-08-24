@@ -7,6 +7,8 @@ from dataclasses import dataclass
 
 from dotenv import load_dotenv
 
+from .urls import extract_username
+
 load_dotenv()
 
 
@@ -23,9 +25,12 @@ class MonitorConfig:
     banned_keywords: list[str]
 
 
-def load_monitor_config() -> MonitorConfig:
-    watchlist_raw = os.getenv("TIKTOK_WATCHLIST", "")
-    watchlist = [u.strip().lstrip("@") for u in watchlist_raw.split(",") if u.strip()]
+def load_monitor_config(watchlist_override: list[str] | None = None) -> MonitorConfig:
+    if watchlist_override is not None:
+        watchlist = [extract_username(u) for u in watchlist_override if u.strip()]
+    else:
+        watchlist_raw = os.getenv("TIKTOK_WATCHLIST", "")
+        watchlist = [extract_username(u) for u in watchlist_raw.split(",") if u.strip()]
 
     keywords_raw = os.getenv("MONITOR_BANNED_KEYWORDS", "")
     banned_keywords = [k.strip().lower() for k in keywords_raw.split(",") if k.strip()]

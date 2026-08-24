@@ -80,12 +80,16 @@ async def _batch_flusher(
             last_flush = time.monotonic()
 
 
-async def run_monitor() -> None:
+async def run_monitor(watchlist_override: list[str] | None = None) -> None:
     llm_config = load_config()
-    monitor_config = load_monitor_config()
+    monitor_config = load_monitor_config(watchlist_override)
 
     if not monitor_config.watchlist:
-        raise ValueError("TIKTOK_WATCHLIST is empty — add comma-separated usernames to .env")
+        raise ValueError(
+            "No accounts to watch — pass one on the command line "
+            "(python monitor_main.py <username-or-tiktok-url>) or set "
+            "TIKTOK_WATCHLIST in .env"
+        )
 
     queue: "asyncio.Queue[Event]" = asyncio.Queue(maxsize=1000)
     store = EventStore(monitor_config.db_path)
